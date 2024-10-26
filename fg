@@ -1,0 +1,24 @@
+import requests
+
+def get_weather(city):
+    api_key = 'YOUR_API_KEY'  # 替换为你的API密钥
+    base_url = 'http://api.openweathermap.org/data/2.5/weather'
+    params = {
+        'q': city,
+        'appid': api_key,
+        'units': 'metric'  # 摄氏度
+    }
+    
+    response = requests.get(base_url, params=params)
+    
+    if response.status_code == 200:
+        data = response.json()
+        weather_description = data['weather'][0]['description']
+        temperature = data['main']['temp']
+        print(f'{city} 的天气：{weather_description}，温度：{temperature}°C')
+    else:
+        print('无法获取天气信息，请检查城市名称或API密钥。')
+
+if __name__ == '__main__':
+    city_name = input('请输入城市名称：')
+    get_weather(city_name)
